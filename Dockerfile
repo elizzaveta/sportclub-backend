@@ -1,35 +1,31 @@
-# Initiate a container to build the application in.
-FROM node:14-alpine as builder
-ENV NODE_ENV=build
+FROM node:14-alpine
+
+ENV NODE_ENV=production
+
 WORKDIR /usr/src/app
 
-# Copy the package.json into the container.
-COPY package*.json ./
+# Install system dependencies
+RUN apk add --no-cache postgresql-client
 
-# Install the dependencies required to build the application.
+# Install application dependencies
+COPY package*.json ./
 RUN npm install
 
-# Copy the application source into the container.
+# Copy application code
 COPY . .
 
-# Build the application.
+# Build the application
 RUN npm run build
 
-# Uninstall the dependencies not required to run the built application.
-RUN npm prune --production
+# Set environment variables for PostgreSQL connection
+ENV POSTGRES_HOST=localhost
+ENV POSTGRES_PORT=5432
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=root
+ENV POSTGRES_DB=sportclub
 
-# Initiate a new container to run the application in.
-FROM node:14-alpine
-  ENV NODE_ENV=production
-WORKDIR /usr/src/app
+# Expose the application port
+EXPOSE 3000
 
-# Copy everything required to run the built application into the new container.
-COPY --from=builder /usr/src/app/package*.json ./
-COPY --from=builder /usr/src/app/node_modules/ ./node_modules/
-COPY --from=builder /usr/src/app/dist/ ./dist/
-
-# Expose the web server's port.
-EXPOSE 8080
-
-# Run the application.
+# Start the application
 CMD ["node", "dist/main"]
