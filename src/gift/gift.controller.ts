@@ -21,7 +21,7 @@ export class GiftController {
   @UseGuards(JwtGuard, RolesGuard)
   @SetMetadata('roles', [RolesEnum.ADMIN])
   @Post()
-  async createGift(@Body() gifts: GiftEntity[]): Promise<GiftEntity[]> {
+  async createGift(@Body() gifts: GiftInterface[]): Promise<GiftEntity[]> {
     console.log(gifts);
     const newGifts = await Promise.all(
       gifts.map(async (gift) => {
@@ -40,7 +40,7 @@ export class GiftController {
   @Put('/:giftId')
   async update(
     @Param('giftId') giftId: number,
-    @Body() updateGift: GiftInterface[],
+    @Body() updateGift: GiftInterface,
   ) {
     return from(this.giftService.update(giftId, updateGift));
   }

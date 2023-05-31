@@ -1,4 +1,10 @@
-import { IsDate, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class SignupDto {
@@ -22,7 +28,6 @@ export class SignupDto {
   @IsDate()
   birthday: Date;
 
-  @IsNotEmpty()
-  @IsString()
-  password: string;
+  @IsOptional()
+  password: string | null;
 }

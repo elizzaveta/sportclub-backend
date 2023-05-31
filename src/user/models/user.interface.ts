@@ -8,7 +8,7 @@ export interface UserInterface {
   phone: string;
   birthday: Date;
   bonuses?: number;
-  password?: string;
+  password?: string | null;
   role?: RoleEntity;
   visits?: VisitEntity[];
 }

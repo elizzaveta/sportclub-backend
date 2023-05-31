@@ -84,7 +84,7 @@ export class VisitService {
       targetVisit.accumulatedBonuses,
     );
 
-    return this.visitRepository.delete(targetVisit);
+    return await this.visitRepository.delete(targetVisit);
   }
 
   async getUserVisits(userId: number) {

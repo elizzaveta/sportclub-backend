@@ -31,8 +31,8 @@ export class UserEntity {
   @Column()
   birthday: Date;
 
-  @Column()
-  password: string;
+  @Column({ default: null })
+  password: string | null;
 
   @ManyToOne(() => RoleEntity, (roleEntity) => roleEntity.id)
   role: RoleEntity;

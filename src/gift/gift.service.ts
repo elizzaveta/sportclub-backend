@@ -14,7 +14,7 @@ export class GiftService {
     return this.giftRepository.save(bonuses);
   }
 
-  async update(giftId: number, updateBonus: GiftInterface[]) {
+  async update(giftId: number, updateBonus: GiftInterface) {
     const targetGift = await this.giftRepository.findOne({
       where: { id: giftId },
     });
