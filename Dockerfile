@@ -30,4 +30,4 @@ ENV POSTGRES_DB=sportclub_db
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "/app/src/index.js"]
+CMD ["node", "/app/src/main"]
