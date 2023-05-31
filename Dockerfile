@@ -7,6 +7,8 @@ WORKDIR /usr/src/app
 # Install system dependencies
 RUN apk add --no-cache postgresql-client
 
+RUN rm -f package-lock.json
+
 # Install application dependencies
 COPY package*.json ./
 RUN yarn install
