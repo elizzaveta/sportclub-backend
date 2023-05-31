@@ -9,13 +9,13 @@ RUN apk add --no-cache postgresql-client
 
 # Install application dependencies
 COPY package*.json ./
-RUN npm install
+RUN yarn install
 
 # Copy application code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN yarn build
 
 # Set environment variables for PostgreSQL connection
 ENV POSTGRES_HOST=localhost
@@ -28,4 +28,4 @@ ENV POSTGRES_DB=sportclub_db
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "dist/main"]
+RUN yarn start
