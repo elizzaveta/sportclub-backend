@@ -6,6 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { RoleEntity } from '../../role/models';
 
 export class SignupDto {
   @IsNotEmpty()
@@ -30,4 +31,7 @@ export class SignupDto {
 
   @IsOptional()
   password: string | null;
+
+  @IsOptional()
+  role?: RoleEntity | null;
 }
