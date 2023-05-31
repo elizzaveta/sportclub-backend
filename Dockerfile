@@ -17,7 +17,7 @@ RUN yarn install
 COPY . .
 
 # Build the application
-RUN yarn build
+RUN yarn; yarn build
 
 # Set environment variables for PostgreSQL connection
 ENV POSTGRES_HOST=localhost
