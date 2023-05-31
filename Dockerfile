@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN nest build
 
 # Set environment variables for PostgreSQL connection
 ENV POSTGRES_HOST=localhost
