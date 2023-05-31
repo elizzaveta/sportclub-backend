@@ -19,14 +19,17 @@ async function bootstrap() {
   const userService = app.get(UserService);
   const roleService = app.get(RoleService);
 
-  await roleService.create([
-    {
-      name: 'admin',
-    },
-    {
-      name: 'user',
-    },
-  ]);
+  const roles = await roleService.getAll();
+  if (roles.length === 0) {
+    await roleService.create([
+      {
+        name: 'admin',
+      },
+      {
+        name: 'user',
+      },
+    ]);
+  }
 
   try {
     await userService.getByPhoneNumber('+000000000000');
