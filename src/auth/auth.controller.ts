@@ -8,13 +8,11 @@ export class AuthController {
 
   @Post('signup')
   signup(@Body() signupDTO: SignupDto) {
-    console.log(signupDTO);
     return this.authService.signup(signupDTO);
   }
 
   @Post('login')
   login(@Body() loginDTO: LoginDto) {
-    console.log(loginDTO);
     return this.authService.login(loginDTO);
   }
 }

@@ -22,7 +22,6 @@ export class GiftController {
   @SetMetadata('roles', [RolesEnum.ADMIN])
   @Post()
   async createGift(@Body() gifts: GiftInterface[]): Promise<GiftEntity[]> {
-    console.log(gifts);
     const newGifts = await Promise.all(
       gifts.map(async (gift) => {
         const newGift = new GiftEntity();

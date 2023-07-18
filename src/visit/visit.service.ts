@@ -36,10 +36,10 @@ export class VisitService {
         today.getMonth(),
         today.getDate() - 7,
       );
-      const userVisit: Date = visitDateArray.find(
+      const userVisit: Date[] = visitDateArray.filter(
         (visit) => prevWeekDate <= visit && visit < today,
       );
-      if (userVisit) {
+      if (userVisit.length > 1) {
         numOfContinuousWeeks++;
       } else {
         shouldContinue = false;

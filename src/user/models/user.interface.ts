@@ -11,4 +11,6 @@ export interface UserInterface {
   password?: string | null;
   role?: RoleEntity;
   visits?: VisitEntity[];
+  oldPassword?: string;
+  newPassword?: string;
 }

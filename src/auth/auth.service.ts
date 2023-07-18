@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { LoginDto, SignupDto } from './models';
 import * as argon from 'argon2';
 import { UserEntity } from '../user/models';
@@ -28,6 +32,21 @@ export class AuthService {
         password: hash,
       });
     }
+    const targetUser = await this.userRepository.find({
+      where: [
+        {
+          email: signupDTO.email,
+        },
+        {
+          phone: signupDTO.phone,
+        },
+      ],
+    });
+    if (targetUser.length !== 0) {
+      return new BadRequestException(
+        'User with such phone or email already exists.',
+      );
+    }
     return this.userRepository.save(user);
   }
   async login(loginDTO: LoginDto) {
@@ -37,11 +56,8 @@ export class AuthService {
     if (!user) throw new ForbiddenException('No user with such email.');
 
     if (!user.password) {
-      console.log('no password');
-      console.log(loginDTO.password);
       user.password = await argon.hash(loginDTO.password);
     } else {
-      console.log(user.password);
       const pwMatches = await argon.verify(user.password, loginDTO.password);
       if (!pwMatches) throw new ForbiddenException('Incorrect password.');
     }

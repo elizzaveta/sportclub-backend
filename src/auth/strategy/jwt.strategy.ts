@@ -1,6 +1,6 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Equal, Repository } from 'typeorm';
 import { UserEntity } from '../../user/models';
@@ -23,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user = await this.userRepository.findOne({
       where: { email: Equal(payload.email) },
     });
+    if (!user) throw new UnauthorizedException();
     delete user.password;
     return user;
   }

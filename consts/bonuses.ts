@@ -1,1 +1,1 @@
-export const bonusesPerSingleVisit = 5;
+export const bonusesPerSingleVisit = 1;

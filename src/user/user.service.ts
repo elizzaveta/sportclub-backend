@@ -1,11 +1,13 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity, UserInterface } from './models';
 import { Repository } from 'typeorm';
+import * as argon from 'argon2';
 
 @Injectable({})
 export class UserService {
@@ -41,8 +43,19 @@ export class UserService {
     const targetUser = await this.userRepository.findOne({ where: { id } });
     if (!targetUser) throw new NotFoundException('User not found.');
 
+    console.log(user);
+
+    if (user.oldPassword && user.newPassword) {
+      if (await argon.verify(targetUser.password, user.oldPassword)) {
+        targetUser.password = await argon.hash(user.newPassword);
+      } else {
+        throw new ForbiddenException("Password doesn't match");
+      }
+    } else {
+      console.log('no password provided');
+    }
+
     await Object.assign(targetUser, { ...user });
-    console.log(targetUser);
 
     return this.userRepository.save(targetUser);
   }

@@ -38,6 +38,7 @@ export class UserController {
     @Param('id') id: number,
     @Body() user: UserInterface,
   ): Observable<UserEntity> {
+    console.log(user);
     return from(this.userService.update(id, user));
   }
 

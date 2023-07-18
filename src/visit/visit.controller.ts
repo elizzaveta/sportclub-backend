@@ -37,7 +37,6 @@ export class VisitController {
     @Body() visitDate: { date: string },
   ) {
     return this.visitService.deleteVisit(userId, visitDate);
-    // userService.withdrawBonuses(one visit bonuses)
   }
 
   @UseGuards(RolesGuard)
